@@ -1,0 +1,26 @@
+agents:
+  queue: linux-small
+  
+steps:
+  - label: "test secrets - docker#v5.12.0" 
+    commands:   
+       - export NOTSOSECRET_SECRET=$(buildkite-agent secret get NOTSOSECRET_SECRET)
+       - echo "the secret is $$NOTSOSECRET_SECRET"
+    plugins:
+      - docker#v5.12.0:
+          image: "node:20"
+          propagate-environment: true         
+          mount-buildkite-agent: true 
+          env:
+            NODE_ENV: development               
+  - label: "xai-test secrets - docker#v5.10.0" 
+    commands:   
+      - export NOTSOSECRET_SECRET=$(buildkite-agent secret get NOTSOSECRET_SECRET) 
+      - echo "the secret is $$NOTSOSECRET_SECRET" # should print "the secret is [REDACTED]" 
+    plugins:
+      - docker#v5.10.0:
+          image: "node:20" 
+          propagate-environment: true
+          mount-buildkite-agent: true
+          env:
+            NODE_ENV: development     
