@@ -2,5 +2,3 @@
  
 set -euo pipefail 
 echo "+++ This is a repository hook (pre-command)" 
-
-export SECRET_FROM_HOOKS=$(buildkite-agent secret get NOTSOSECRET_SECRET)
